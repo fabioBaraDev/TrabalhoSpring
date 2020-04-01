@@ -2,11 +2,11 @@ package br.com.fiap.trabalho.dto;
 
 public class AlunoDTO {
 	private String nome;
-	private Long alunoID;
+	private Long numeroCartao;
 	
-	public AlunoDTO(String nome, Long alunoID) {
+	public AlunoDTO(String nome, Long numeroCartao) {
 		this.nome = nome;
-		this.alunoID = alunoID;
+		this.setNumeroCartao(numeroCartao);
 	}
 	
 	public String getNome() {
@@ -15,10 +15,13 @@ public class AlunoDTO {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public Long getAlunoID() {
-		return alunoID;
+
+	public Long getNumeroCartao() {
+		return numeroCartao;
 	}
-	public void setAlunoID(Long alunoID) {
-		this.alunoID = alunoID;
+
+	public void setNumeroCartao(Long numeroCartao) {
+		this.numeroCartao = numeroCartao;
 	}
+
 }

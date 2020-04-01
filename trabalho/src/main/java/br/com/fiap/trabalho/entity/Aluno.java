@@ -20,23 +20,24 @@ public class Aluno implements Serializable {
 	@Column(name="nome", nullable = true)
 	private String nome;
 
-	@Column(name="aluno_id", nullable = true)
-	private Long alunoID;
+	@Column(name="numeroCartao", nullable = true)
+	private Long numeroCartao;
+
+	public Long getNumeroCartao() {
+		return numeroCartao;
+	}
+
+	public void setNumeroCartao(Long numeroCartao) {
+		this.numeroCartao = numeroCartao;
+	}
 
 	public Aluno(){}
 	
 	public Aluno(String nome, Long alunoID){
 		this.nome = nome;
-		this.alunoID = alunoID;
+		this.numeroCartao = alunoID;
 	}
 	
-	public Long getAlunoID() {
-		return alunoID;
-	}
-
-	public void setAlunoID(Long alunoID) {
-		this.alunoID = alunoID;
-	}
 
 	public Integer getIdBaseDeDados() {
 		return id;

@@ -38,10 +38,10 @@ public class LoadBaseFileServiceImpl implements LoadBaseFileService {
 
 	private void setData(String entry) {
 
-		Long alunoId = Long.parseLong(entry.substring(41, 55).replace("-", "").replace(" ", ""));
+		Long numeroCartao = Long.parseLong(entry.substring(41, 55).replace("-", "").replace(" ", ""));
 		String nome = entry.substring(0, 41);
 
-		Aluno aluno = new Aluno(nome, alunoId);
+		Aluno aluno = new Aluno(nome, numeroCartao);
 		
 		alunos.save(aluno);
 
