@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.trabalho.dto.AlunoDTO;
 import br.com.fiap.trabalho.service.AlunoService;
+import org.springframework.http.HttpStatus;
 
 @RestController
 @RequestMapping("cadastro")
@@ -25,6 +27,7 @@ public class CadastroAlunoController {
 	private AlunoService alunoService;
 
 	@PutMapping
+	@ResponseStatus(HttpStatus.CREATED)
 	public AlunoDTO save(@RequestBody AlunoDTO alunoDTO) {
 		return alunoService.save(alunoDTO);
 	}

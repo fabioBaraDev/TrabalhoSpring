@@ -11,8 +11,6 @@ import br.com.fiap.trabalho.service.LoadBaseFileService;
 @SpringBootApplication
 public class TrabalhoApplication {
 
-	
-
 	public static void main(String[] args) throws IOException {
 
 		ConfigurableApplicationContext context = SpringApplication.run(TrabalhoApplication.class, args);

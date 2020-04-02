@@ -7,7 +7,7 @@ import javax.persistence.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
-@Table(name = "tbaluno")
+@Table(name = "tb_aluno")
 @EntityListeners(AuditingEntityListener.class)
 public class Aluno implements Serializable {
 
@@ -17,10 +17,10 @@ public class Aluno implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(name="nome", nullable = true)
+	@Column(name="nome", nullable = false)
 	private String nome;
 
-	@Column(name="numeroCartao", nullable = true)
+	@Column(name="numeroCartao", nullable = false)
 	private Long numeroCartao;
 
 	public Long getNumeroCartao() {
