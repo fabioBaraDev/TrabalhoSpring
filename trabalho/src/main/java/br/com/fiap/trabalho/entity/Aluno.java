@@ -7,7 +7,7 @@ import javax.persistence.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
-@Table(name = "TB_ALUNO")
+@Table(name = "tbaluno")
 @EntityListeners(AuditingEntityListener.class)
 public class Aluno implements Serializable {
 
@@ -34,16 +34,15 @@ public class Aluno implements Serializable {
 	public Aluno(){}
 	
 	public Aluno(String nome, Long alunoID){
-		this.nome = nome;
+		this.nome = nome.toUpperCase();
 		this.numeroCartao = alunoID;
 	}
 	
-
-	public Integer getIdBaseDeDados() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setIdBaseDeDados(Integer id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -52,7 +51,7 @@ public class Aluno implements Serializable {
 	}
 
 	public void setNome(String nome) {
-		this.nome = nome;
+		this.nome = nome.toUpperCase();
 	}
 
 }

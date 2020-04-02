@@ -20,33 +20,52 @@ public class AlunoServiceImpl implements AlunoService {
 
 	public AlunoDTO save(AlunoDTO alunoDTO) {
 		Aluno aluno = createAluno(alunoDTO);
-		alunoRepository.save(aluno);
-		return alunoDTO;
+		aluno = alunoRepository.save(aluno);
+
+		return createAlunoDTO(aluno);
 	}
 
 	private Aluno createAluno(AlunoDTO alunoDTO) {
 		return new Aluno(alunoDTO.getNome(), alunoDTO.getNumeroCartao());
 	}
+	
+	private AlunoDTO createAlunoDTO(Aluno aluno) {
+		return new AlunoDTO(aluno.getId(), aluno.getNome(), aluno.getNumeroCartao());
+	}
 
 	public void delete(Integer id) {
-		List<Aluno> aluno = getAluno(id);
-		//alunoRepository.delete(aluno);
+		Optional<Aluno> aluno = getAluno(id);
+		alunoRepository.delete(aluno.get());
 	}
-//select nome, numero_cartao from TB_ALUNO
-	private List<Aluno> getAluno(Integer id) {
-		//return alunoRepository.findAlunos();
-		return alunoRepository.findAll();
+
+	private Optional<Aluno> getAluno(Integer id) {
+		return alunoRepository.findById(id);
 	}
 
 	public List<AlunoDTO> getAll() {
-		
+
 		List<Aluno> alunos = alunoRepository.findAll();
-		
-		return alunos.stream().map((x) -> {return new AlunoDTO(x.getNome(), x.getNumeroCartao());}).collect(Collectors.toList());
-		
+
+		return alunos.stream().map((x) -> {
+			return new AlunoDTO(x.getId(), x.getNome(), x.getNumeroCartao());
+		}).collect(Collectors.toList());
+
 	}
 
-	public Optional<Aluno> getById(Integer id) {
-		return alunoRepository.findById(id);
+	public Optional<AlunoDTO> getById(Integer id) {
+		Optional<Aluno> aluno = alunoRepository.findById(id);
+		Optional<AlunoDTO> alunoDTO = Optional
+				.of(new AlunoDTO(aluno.get().getId(), aluno.get().getNome(), aluno.get().getNumeroCartao()));
+		return alunoDTO;
 	}
+
+	public List<AlunoDTO> getByName(String nome) {
+
+		List<AlunoDTO> alunoDTO = alunoRepository.findByName(nome.toUpperCase()).stream().map((x) -> {
+			return new AlunoDTO(x.getId(), x.getNome(), x.getNumeroCartao());
+		}).collect(Collectors.toList());
+
+		return alunoDTO;
+	}
+
 }

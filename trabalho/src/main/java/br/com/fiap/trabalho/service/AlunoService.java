@@ -14,6 +14,8 @@ public interface AlunoService {
 
 	public List<AlunoDTO> getAll();
 	
-	public Optional<Aluno> getById(Integer id);
+	public Optional<AlunoDTO> getById(Integer id);
+	
+	public List<AlunoDTO> getByName(String nome);
 
 }
