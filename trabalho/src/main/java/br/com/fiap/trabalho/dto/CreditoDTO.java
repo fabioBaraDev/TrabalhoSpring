@@ -16,12 +16,18 @@ public class CreditoDTO {
 	}
 	public CreditoDTO() {}
 	
+	public AlunoDTO getAluno() {
+		return aluno;
+	}
+	
 	public void setAlunoDTO(AlunoDTO aluno) {
 		this.aluno = aluno;
 	}
+	
 	public Double getSaldo() {
 		return saldo;
 	}
+	
 	public void setSaldo(Double saldo) {
 		this.saldo = saldo;
 	}

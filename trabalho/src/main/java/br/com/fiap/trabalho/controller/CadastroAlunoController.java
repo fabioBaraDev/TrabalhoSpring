@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.trabalho.dto.AlunoDTO;
+import br.com.fiap.trabalho.dto.CreditoDTO;
 import br.com.fiap.trabalho.service.AlunoService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 @RestController
 @RequestMapping("cadastro")
@@ -28,8 +30,12 @@ public class CadastroAlunoController {
 
 	@PutMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public AlunoDTO save(@RequestBody AlunoDTO alunoDTO) {
-		return alunoService.save(alunoDTO);
+	public ResponseEntity save(@RequestBody CreditoDTO creditoDTO) {
+		try {
+			return new ResponseEntity(alunoService.save(creditoDTO), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@GetMapping("/aluno/todos")

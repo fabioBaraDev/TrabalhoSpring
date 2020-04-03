@@ -1,7 +1,5 @@
 package br.com.fiap.trabalho.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.trabalho.dto.CreditoDTO;
+import br.com.fiap.trabalho.exceptions.SemSaldoCadastrado;
 import br.com.fiap.trabalho.service.CreditoService;
 
 @RestController
@@ -24,24 +23,68 @@ public class TransacoesController {
 	
 	@PostMapping("/credito/debitar")
 	public ResponseEntity<String> debitarCredito(@RequestBody CreditoDTO creditoDTO) {
-		String res = credito.debitar(creditoDTO);
-		return new ResponseEntity<>(res, HttpStatus.OK);
-	}
-	
-	@PostMapping("/credito/adicionar")
-	public ResponseEntity<String> adicionarCredito(@RequestBody CreditoDTO creditoDTO) {
-		String res = credito.adicionar(creditoDTO);
-		return new ResponseEntity<>(res, HttpStatus.OK);
-	}
-	
-	@GetMapping("/credito/saldo/id/{id}")
-	public CreditoDTO getSaldoById(@PathVariable Integer id) {
-		return credito.getSaldoById(id);	
+		try {
+			return credito.debitar(creditoDTO);
+		} catch (SemSaldoCadastrado e) {
+			return new ResponseEntity(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+		} catch (Exception e) {
+			return new ResponseEntity("Ocorreu um erro inesperado", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
-	
-	@GetMapping("/credito/saldo/cartao/{cartao}")
-	public CreditoDTO getSaldoById(@PathVariable Long cartao) {
-		return credito.getSaldoByCartao(cartao);	
+	@PostMapping("/credito/adicionar")
+	public ResponseEntity<String> adicionarCredito(@RequestBody CreditoDTO creditoDTO) {
+		try {
+			return credito.adicionar(creditoDTO);
+		} catch (SemSaldoCadastrado e) {
+			return new ResponseEntity(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+		} catch (Exception e) {
+			return new ResponseEntity("Ocorreu um erro inesperado", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
+
+	@PostMapping("/credito/ativar")
+	public ResponseEntity<String> ativarCartao(@RequestBody CreditoDTO creditoDTO) {
+		try {
+			return credito.ativarCartao(creditoDTO);
+		} catch (SemSaldoCadastrado e) {
+			return new ResponseEntity(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+		} catch (Exception e) {
+			return new ResponseEntity("Ocorreu um erro inesperado", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@PostMapping("/credito/desativar")
+	public ResponseEntity<String> desativarCartao(@RequestBody CreditoDTO creditoDTO) {
+		try {
+			return credito.desativarCartao(creditoDTO);
+		} catch (SemSaldoCadastrado e) {
+			return new ResponseEntity(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+		} catch (Exception e) {
+			return new ResponseEntity("Ocorreu um erro inesperado", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@GetMapping("/credito/saldo/id/{id}")
+	public ResponseEntity getSaldoById(@PathVariable Integer id) {
+		try {
+			return new ResponseEntity(credito.getSaldoById(id), HttpStatus.OK);
+		} catch (SemSaldoCadastrado e) {
+			return new ResponseEntity(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+		} catch (Exception e) {
+			return new ResponseEntity("Ocorreu um erro inesperado", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@GetMapping("/credito/saldo/cartao/{cartao}")
+	public ResponseEntity getSaldoById(@PathVariable Long cartao) {
+		try {
+			return new ResponseEntity(credito.getSaldoByCartao(cartao), HttpStatus.OK);
+		} catch (SemSaldoCadastrado e) {
+			return new ResponseEntity(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+		} catch (Exception e) {
+			return new ResponseEntity("Ocorreu um erro inesperado", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 }

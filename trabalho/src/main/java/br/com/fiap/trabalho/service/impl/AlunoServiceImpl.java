@@ -8,20 +8,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.fiap.trabalho.dto.AlunoDTO;
+import br.com.fiap.trabalho.dto.CreditoDTO;
 import br.com.fiap.trabalho.entity.Aluno;
 import br.com.fiap.trabalho.repository.AlunoRepository;
 import br.com.fiap.trabalho.service.AlunoService;
+import br.com.fiap.trabalho.service.CreditoService;
 
 @Service
 public class AlunoServiceImpl implements AlunoService {
 
 	@Autowired
 	AlunoRepository alunoRepository;
+	
+	@Autowired
+	CreditoService creditoService;
 
-	public AlunoDTO save(AlunoDTO alunoDTO) {
-		Aluno aluno = createAluno(alunoDTO);
+	public AlunoDTO save(CreditoDTO creditoDTO) throws Exception {
+		Aluno aluno = createAluno(creditoDTO.getAluno());
 		aluno = alunoRepository.save(aluno);
-
+		creditoDTO.getAluno().setId(aluno.getId());
+		
+		if(!creditoService.salvar(creditoDTO, true).isPresent()) {
+			throw new Exception("Erro ao cadastrar saldo");
+		}
+		
 		return createAlunoDTO(aluno);
 	}
 
@@ -36,6 +46,7 @@ public class AlunoServiceImpl implements AlunoService {
 	public void delete(Integer id) {
 		Optional<Aluno> aluno = getAluno(id);
 		alunoRepository.delete(aluno.get());
+		creditoService.delete(id);
 	}
 
 	private Optional<Aluno> getAluno(Integer id) {
