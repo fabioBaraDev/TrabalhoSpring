@@ -11,7 +11,7 @@ public interface AlunoService {
 
 	public AlunoDTO save(CreditoDTO creditoDTO) throws Exception;
 
-	public void delete(Integer id);
+	public String delete(Integer id);
 
 	public List<AlunoDTO> getAll();
 	

@@ -54,7 +54,8 @@ public class CadastroAlunoController {
 	}
 
 	@DeleteMapping("/aluno/{id}")
-	public @ResponseBody void delete(@PathVariable Integer id) {
+	public ResponseEntity delete(@PathVariable Integer id) {
 		alunoService.delete(id);
+		return new ResponseEntity("Deletado com sucesso", HttpStatus.OK);
 	}
 }

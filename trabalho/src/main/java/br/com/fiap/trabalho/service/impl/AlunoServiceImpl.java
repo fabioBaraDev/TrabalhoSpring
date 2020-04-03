@@ -43,10 +43,11 @@ public class AlunoServiceImpl implements AlunoService {
 		return new AlunoDTO(aluno.getId(), aluno.getNome(), aluno.getNumeroCartao());
 	}
 
-	public void delete(Integer id) {
+	public String delete(Integer id) {
 		Optional<Aluno> aluno = getAluno(id);
 		alunoRepository.delete(aluno.get());
 		creditoService.delete(id);
+		return "Deletado com sucesso";
 	}
 
 	private Optional<Aluno> getAluno(Integer id) {
