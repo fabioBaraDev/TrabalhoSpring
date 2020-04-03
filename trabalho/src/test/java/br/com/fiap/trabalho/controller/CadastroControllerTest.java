@@ -1,4 +1,4 @@
-package br.com.fiap.trabalho;
+package br.com.fiap.trabalho.controller;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;

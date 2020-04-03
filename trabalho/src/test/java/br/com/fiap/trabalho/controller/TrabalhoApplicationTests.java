@@ -1,4 +1,4 @@
-package br.com.fiap.trabalho;
+package br.com.fiap.trabalho.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

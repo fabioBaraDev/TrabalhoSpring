@@ -19,7 +19,7 @@ import br.com.fiap.trabalho.service.CreditoService;
 public class TransacoesController {
 
 	@Autowired
-	CreditoService credito;
+	private CreditoService credito;
 	
 	@PostMapping("/credito/debitar")
 	public ResponseEntity<String> debitarCredito(@RequestBody CreditoDTO creditoDTO) {
@@ -77,7 +77,7 @@ public class TransacoesController {
 	}
 
 	@GetMapping("/credito/saldo/cartao/{cartao}")
-	public ResponseEntity getSaldoById(@PathVariable Long cartao) {
+	public ResponseEntity getSaldoByCartao(@PathVariable Long cartao) {
 		try {
 			return new ResponseEntity(credito.getSaldoByCartao(cartao), HttpStatus.OK);
 		} catch (SemSaldoCadastrado e) {

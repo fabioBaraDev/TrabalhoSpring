@@ -18,10 +18,10 @@ import br.com.fiap.trabalho.service.CreditoService;
 public class AlunoServiceImpl implements AlunoService {
 
 	@Autowired
-	AlunoRepository alunoRepository;
+	private AlunoRepository alunoRepository;
 	
 	@Autowired
-	CreditoService creditoService;
+	private CreditoService creditoService;
 
 	public AlunoDTO save(CreditoDTO creditoDTO) throws Exception {
 		Aluno aluno = createAluno(creditoDTO.getAluno());
@@ -54,7 +54,7 @@ public class AlunoServiceImpl implements AlunoService {
 		return alunoRepository.findById(id);
 	}
 
-	public List<AlunoDTO> getAll() {
+	public List<AlunoDTO> getAll() { 
 
 		List<Aluno> alunos = alunoRepository.findAll();
 
