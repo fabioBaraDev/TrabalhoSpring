@@ -26,7 +26,7 @@ public class CreditoServiceImpl implements CreditoService {
 
 	@Autowired
 	AlunoService alunoService;
-	
+
 	@Autowired
 	ExtratoRepository extratoRepository;
 
@@ -46,6 +46,37 @@ public class CreditoServiceImpl implements CreditoService {
 		return persistirClienteAtivo(creditDTO, false);
 	}
 
+	public CreditoDTO getSaldoById(Integer id) throws Exception {
+		Credito saldo = getCredito(id);
+
+		Optional<AlunoDTO> aluno = alunoService.getById(saldo.getId());
+
+		CreditoDTO credito = new CreditoDTO(aluno.get(), saldo.getSaldo());
+		return credito;
+	}
+
+	public CreditoDTO getSaldoByCartao(Long numeroCartao) throws Exception {
+
+		Credito saldo = getCreditoByCartao(numeroCartao);
+		Optional<AlunoDTO> aluno = alunoService.getById(saldo.getId());
+
+		CreditoDTO credito = new CreditoDTO(aluno.get(), saldo.getSaldo());
+		return credito;
+	}
+
+	public Optional salvar(CreditoDTO creditDTO, Boolean ativo) {
+
+		Credito credito = new Credito(creditDTO);
+		credito.setAlunoCreditoAtivo(ativo);
+
+		return Optional.of(creditoRepository.save(credito));
+
+	}
+
+	public void delete(Integer id) {
+		creditoRepository.deleteById(id);
+	}
+
 	private ResponseEntity persistir(CreditoDTO creditoRequest, Operacao operacao) throws Exception {
 
 		Optional<AlunoDTO> aluno = alunoService.getById(creditoRequest.getAluno().getId());
@@ -56,13 +87,12 @@ public class CreditoServiceImpl implements CreditoService {
 
 		Integer idAluno = creditoRequest.getAluno().getId();
 		CreditoDTO creditoDataBase = getSaldoById(idAluno);
-
-		if (creditoDataBase != null && !getCredito(idAluno).getAlunoCreditoAtivo()) {
+		
+		if (!getCredito(idAluno).getAlunoCreditoAtivo()) {
 			return new ResponseEntity<>("Aluno com conta inativa", HttpStatus.FORBIDDEN);
 		}
 
-		if (creditoDataBase != null
-				&& creditoDataBase.getAluno().getNumeroCartao().equals(creditoRequest.getAluno().getNumeroCartao())) {
+		if (creditoDataBase.getAluno().getNumeroCartao().equals(creditoRequest.getAluno().getNumeroCartao())) {
 
 			Double saldoOperacao = creditoRequest.getSaldo();
 			Double resultado = null;
@@ -76,10 +106,10 @@ public class CreditoServiceImpl implements CreditoService {
 
 			Credito creditoInput = new Credito(creditoRequest);
 			creditoInput.setAlunoCreditoAtivo(true);
-			
+
 			creditoRepository.save(creditoInput);
 			salvaExtrato(creditoInput, saldoOperacao, operacao);
-			
+
 		} else {
 			return new ResponseEntity<>("Esse aluno não possui esse cartão", HttpStatus.FORBIDDEN);
 		}
@@ -90,15 +120,6 @@ public class CreditoServiceImpl implements CreditoService {
 	private void salvaExtrato(Credito credito, Double valorOperacao, Operacao operacao) {
 		Extrato extrato = new Extrato(credito, valorOperacao, operacao);
 		extratoRepository.save(extrato);
-	}
-	
-	public CreditoDTO getSaldoById(Integer id) throws Exception {
-		Credito saldo = getCredito(id);
-
-		Optional<AlunoDTO> aluno = alunoService.getById(saldo.getId());
-
-		CreditoDTO credito = new CreditoDTO(aluno.get(), saldo.getSaldo());
-		return credito;
 	}
 
 	private Credito getCredito(Integer id) throws SemSaldoCadastrado {
@@ -121,15 +142,6 @@ public class CreditoServiceImpl implements CreditoService {
 		return credito.get();
 	}
 
-	public CreditoDTO getSaldoByCartao(Long numeroCartao) throws Exception {
-
-		Credito saldo = getCreditoByCartao(numeroCartao);
-		Optional<AlunoDTO> aluno = alunoService.getById(saldo.getId());
-
-		CreditoDTO credito = new CreditoDTO(aluno.get(), saldo.getSaldo());
-		return credito;
-	}
-
 	private ResponseEntity persistirClienteAtivo(CreditoDTO creditoRequest, Boolean ativo) throws Exception {
 
 		Optional<AlunoDTO> aluno = alunoService.getById(creditoRequest.getAluno().getId());
@@ -146,19 +158,5 @@ public class CreditoServiceImpl implements CreditoService {
 
 		String resposta = ativo ? "Ativado" : "Desativado";
 		return new ResponseEntity<>("Cliente " + resposta + " com sucesso!", HttpStatus.OK);
-	}
-
-	public Optional salvar(CreditoDTO creditDTO, Boolean ativo) {
-		
-		Credito credito = new Credito(creditDTO);
-		credito.setAlunoCreditoAtivo(ativo);
-		
-		return Optional.of(creditoRepository.save(credito));
-		
-	}
-
-
-	public void delete(Integer id) {
-		creditoRepository.deleteById(id);
 	}
 }
