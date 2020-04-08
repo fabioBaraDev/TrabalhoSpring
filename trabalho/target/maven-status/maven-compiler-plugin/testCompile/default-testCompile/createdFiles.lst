@@ -1,0 +1,8 @@
+br\com\fiap\trabalho\service\CreditoServiceTest.class
+br\com\fiap\trabalho\service\AlunoServiceTest.class
+br\com\fiap\trabalho\controller\CadastroControllerTest.class
+br\com\fiap\trabalho\service\ExtratoServiceTest.class
+br\com\fiap\trabalho\controller\ExtratoControllerTest.class
+br\com\fiap\trabalho\controller\TrabalhoApplicationTests.class
+br\com\fiap\trabalho\controller\TransacoesControllerTest.class
+br\com\fiap\trabalho\service\LoadBaseFileServiceTest.class
