@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.http.ResponseEntity;
 
 import br.com.fiap.trabalho.dto.CreditoDTO;
-import br.com.fiap.trabalho.entity.Credito;
 
 public interface CreditoService {
 	public ResponseEntity debitar(CreditoDTO creditoDTO) throws Exception;

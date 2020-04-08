@@ -1,9 +1,6 @@
 package br.com.fiap.trabalho.service;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,14 +32,6 @@ public class LoadBaseFileServiceTest {
 
 	@Test
 	public void load() throws IOException {
-
-		List<String> items = new ArrayList<String>();
-
-		items.add("AARON FELIPE GRASSMANN                   3095564 100-11");
-		items.add("AARON PAPA DE MORAIS                     8610833 160-26");
-		items.add("ABNER GALLILEI MOREIRA BORGES            1494778 500-35");
-
-		Stream<String> stream = items.stream();
 
 		Aluno aluno = new Aluno();
 		aluno.setId(1);

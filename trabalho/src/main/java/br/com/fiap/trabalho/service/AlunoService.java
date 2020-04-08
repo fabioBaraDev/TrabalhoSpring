@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import br.com.fiap.trabalho.dto.AlunoDTO;
 import br.com.fiap.trabalho.dto.CreditoDTO;
-import br.com.fiap.trabalho.entity.Aluno;
 
 public interface AlunoService {
 
