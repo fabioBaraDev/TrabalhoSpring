@@ -1,7 +1,7 @@
 package br.com.fiap.trabalho.service.impl;
 
 import java.io.IOException;
-import java.util.stream.Stream;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,8 +24,7 @@ public class LoadBaseFileServiceImpl implements LoadBaseFileService {
 	
 	public void load() throws IOException {
 		try {
-
-			Stream file = FilterFile.filterFromResource("lista_alunos.txt");
+			List<String> file = FilterFile.filterFromResource("lista_alunos.txt");
 
 			file.forEach((linha) -> {
 				setData(linha.toString());

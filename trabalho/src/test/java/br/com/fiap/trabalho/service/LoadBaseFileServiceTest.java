@@ -32,7 +32,7 @@ public class LoadBaseFileServiceTest {
 
 	@Test
 	public void load() throws IOException {
-
+		
 		Aluno aluno = new Aluno();
 		aluno.setId(1);
 		aluno.setNome("Joao");

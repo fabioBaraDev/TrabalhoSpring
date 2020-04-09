@@ -1,6 +1,5 @@
 package br.com.fiap.trabalho.controller;
 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -17,13 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.fiap.trabalho.dto.AlunoDTO;
 import br.com.fiap.trabalho.dto.CreditoDTO;
 import br.com.fiap.trabalho.service.AlunoService;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 @RestController
 @RequestMapping("cadastro")
 public class CadastroAlunoController {
-
+	
 	@Autowired
 	private AlunoService alunoService;
 
